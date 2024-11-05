@@ -1,8 +1,8 @@
 export interface Event {
-     gpa: any
-     surname: any
-     name: any
-     
+     gpa: never
+     surname: never
+     name: never
+
      id: number
      category: string
      title: string
@@ -12,7 +12,14 @@ export interface Event {
      time: string
      petsAllowed: boolean
      organizer: string
-   }
+}
+export interface MessageState {
+  message: string
+}
+
+export interface EventState {
+  event: Event | null
+}
 
 
 
@@ -30,5 +37,3 @@ export interface Event {
 
 
 
-   
-    

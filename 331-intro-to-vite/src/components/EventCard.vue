@@ -20,7 +20,7 @@ const event = ref({
  <RouterLink class="event-link" :to="{ name: 'event-detail-view', params:{ id: event.id } }">
        <h2>{{ event.title }}</h2>
       <span>@{{ event.time }} on {{ event.date }}</span>
-    
+
   </RouterLink>
   </div>
 </template>

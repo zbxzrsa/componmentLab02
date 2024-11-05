@@ -1,35 +1,38 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { type Event } from '@/types'
-import EventService from '@/services/EventService'
-import { useRouter } from 'vue-router'
+import { useEventStore } from 'c:/Users/zhang/lab3-Vue-Router/331-intro-to-vite/src/stores/event'
+import { storeToRefs } from 'pinia'
+// import { ref, onMounted } from 'vue'
+// import { type Event } from 'c:/Users/zhang/lab3-Vue-Router/331-intro-to-vite/src/types'
+// import EventService from 'c:/Users/zhang/lab3-Vue-Router/331-intro-to-vite/src/services/EventService'
+// import { useRouter } from 'vue-router'
 
-const event = ref<Event | null>(null)
-const props = defineProps({
-  id: {
-    type: String,
-    required: true
-  }
-})
+// const event = ref<Event | null>(null)
+// const props = defineProps({
+//   id: {
+//     type: String,
+//     required: true
+//   }
+// })
+// const router = useRouter()
+const store = useEventStore()
+const { event } = storeToRefs(store)
 
-const router = useRouter()
-
-onMounted(() => {
-  EventService.getEvent(parseInt(props.id))
-    .then((response) => {
-      event.value = response.data
-    })
-    .catch((error) => {
-      if (error.respose && error.response.status === 404) {
-        router.push({
-          name: '404-resource-view',
-          params: { resource: 'event' }
-        })
-      } else {
-        router.push({ name: 'network-error-view' })
-      }
-    })
-})
+// onMounted(() => {
+//   EventService.getEvent(parseInt(props.id))
+//     .then((response) => {
+//       event.value = response.data
+//     })
+//     .catch((error) => {
+//       if (error.respose && error.response.status === 404) {
+//         router.push({
+//           name: '404-resource-view',
+//           params: { resource: 'event' }
+//         })
+//       } else {
+//         router.push({ name: 'network-error-view' })
+//       }
+//     })
+// })
 </script>
 
 <template>

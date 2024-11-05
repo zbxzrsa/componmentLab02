@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
 import { toRefs } from 'vue'
-import { type Event } from '@/types'
+import { type Event } from 'c:/Users/zhang/lab3-Vue-Router/331-intro-to-vite/src/types'
 import { useRouter } from 'vue-router'
-
+import { useMessageStore } from 'c:/Users/zhang/lab3-Vue-Router/331-intro-to-vite/src/stores/message'
 
 const props = defineProps<{
   event: Event
@@ -13,16 +13,19 @@ const props = defineProps<{
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const { event } = toRefs(props)
 const router = useRouter()
+const store = useMessageStore()
 const register = () => {
-  // If the registration API call successful
-  // Push back to the event details view
-  router.push({ name: 'event-detail-view' })
-}
-
+  store.updateMessage('You are successuflly registered for ' + props.event.title)
+  setTimeout(() => {
+    store.resetMessage()
+  }, 3000)
+  router.push({ name: 'event-detail-view', params: { id: props.event.id } })
+ }
 
 </script>
 <template>
-  
+  <div>
     <p>Register event here</p>
     <button @click="register">Register</button>
+  </div>
 </template>

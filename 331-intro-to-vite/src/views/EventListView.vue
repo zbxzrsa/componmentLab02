@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import EventCard from '@/components/EventCard.vue'
-import EventCategoriesAndOrganizer from '@/components/EventCategoriesAndOrganizer.vue'
-import { type Event } from '@/type'
+import EventCard from '../components/EventCard.vue';
+import EventCategoriesAndOrganizer from 'c:/Users/zhang/lab3-Vue-Router/331-intro-to-vite/src/components/EventCategoriesAndOrganizer.vue'
+import { type Event } from 'c:/Users/zhang/lab3-Vue-Router/331-intro-to-vite/src/type'
 import { onMounted, ref, computed,watchEffect} from 'vue'
-import EventService from '@/services/EventService'
+import EventService from 'c:/Users/zhang/lab3-Vue-Router/331-intro-to-vite/src/services/EventService'
 import { useRoute } from 'vue-router';
-import router from '@/router'
-
+import router from 'c:/Users/zhang/lab3-Vue-Router/331-intro-to-vite/src/router/index'
+import nProgress from 'nprogress'
 
 
 
@@ -39,7 +39,7 @@ const props = defineProps<{
 const page = computed(() => props.page);
 
 onMounted(() => {
-    
+
     watchEffect(() => {
     events.value = null
     EventService.getEvents(itemsPerPage.value, page.value)
@@ -60,37 +60,36 @@ function navigateWithPageSize(size: number) {
 </script>
 
 <template>
-  <h1>Events For Good</h1>
-  <!-- new element -->
-  <div class="events">
-    <EventCard v-for="event in events" :key="event.id" :event="event" />
-    <div class="event-card">
-      <EventCategoriesAndOrganizer
-        :organizer-name="event.organizer"
-        :categories="[event.category]"
-        v-for="event in events"
-        :key="`${event.id}-info`"
-      />
-    </div>
-    <div class="pagination">
-       <RouterLink
-         id="page-prev"
-         :to="{ name: 'event-list-view', query: { page: page - 1 } }"
-         rel="prev"
-         v-if="page != 1"
-         >&#60; Prev Page</RouterLink
-       >
-       <RouterLink
-        id="page-next"
-        :to="{ name: 'event-list-view', query: { page: page + 1 } }"
-        rel="next"
-        v-if="hasNexPage"
-        >Next Page &#62;</RouterLink
-      >
+  <div>
+    <h1>Events For Good</h1>
+    <div class="events">
+      <EventCard v-for="event in events" :key="event.id" :event="event" />
+      <div class="event-card">
+        <EventCategoriesAndOrganizer
+          :organizer-name="event.organizer"
+          :categories="[event.category]"
+          v-for="event in events"
+          :key="`${event.id}-info`"
+        />
+      </div>
+      <div class="pagination">
+        <RouterLink
+          id="page-prev"
+          :to="{ name: 'event-list-view', query: { page: page - 1 } }"
+          rel="prev"
+          v-if="page != 1"
+        >&#60; Prev Page </RouterLink>
+        <RouterLink
+          id="page-next"
+          :to="{ name: 'event-list-view', query: { page: page + 1 } }"
+          rel="next"
+          v-if="hasNextPage"
+        >Next Page &#62;</RouterLink>
+      </div>
     </div>
   </div>
-
 </template>
+
 
 <style scoped>
 .events {
